@@ -1,5 +1,7 @@
 package cx.rain.mc.morepotions;
 
+import cx.rain.mc.morepotions.listener.DrinkPotionListener;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class MorePotions extends JavaPlugin {
@@ -15,6 +17,7 @@ public class MorePotions extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        Bukkit.getPluginManager().registerEvents(new DrinkPotionListener(this), this);
 
     }
 
