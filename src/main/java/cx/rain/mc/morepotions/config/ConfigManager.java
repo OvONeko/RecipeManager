@@ -19,4 +19,7 @@ public class ConfigManager {
     public boolean AllowRandomEffect() {
         return config.getBoolean("allowRandomEffect", true);
     }
+    public boolean AllowMixByAnvil() {
+        return config.getBoolean("allowMixByAnvil", true);
+    }
 }
