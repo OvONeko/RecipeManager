@@ -5,6 +5,7 @@ import cx.rain.mc.morepotions.brewing.config.RecipeEntry;
 import cx.rain.mc.morepotions.utility.PotionItemStackHelper;
 import org.bukkit.Material;
 import org.bukkit.block.BrewingStand;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.BrewerInventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -50,7 +51,7 @@ public class BrewingTicker extends BukkitRunnable {
 
     @Override
     public void run() {
-        if (!(block.getLocation().getBlock() instanceof BrewingStand)) {
+        if (block.getLocation().getBlock().getType() != Material.BREWING_STAND) {
             stop();
             return;
         }
@@ -74,6 +75,8 @@ public class BrewingTicker extends BukkitRunnable {
         }
 
         if (remainTime <= 0) {
+            block.setFuelLevel(block.getFuelLevel() - 1);
+
             inventory.getIngredient().setAmount(inventory.getIngredient().getAmount() - 1);
 
             for (var i = 0; i < 3; i++) {
@@ -90,6 +93,14 @@ public class BrewingTicker extends BukkitRunnable {
 
         remainTime -= 1;
         block.setBrewingTime(remainTime);
+        block.update();
+
+        var viewers = inventory.getViewers();
+        for (var viewer : viewers) {
+            if (viewer instanceof Player player) {
+                player.updateInventory();
+            }
+        }
     }
 
     public void start() {

@@ -22,11 +22,11 @@ public class ConfigManager {
     private static final String CUSTOM_EFFECTS_DIR_NAME = "effects";
 
     private static final String EXAMPLE_BREWING_RECIPES_NAME = "example_recipe.yml";
-    private static final String EXAMPLE_BREWING_RECIPES_RESOURCE_PATH = "/brewing/example_recipe.yml";
+    private static final String EXAMPLE_BREWING_RECIPES_RESOURCE_PATH = "brewing/example_recipe.yml";
     private static final String EXAMPLE_CUSTOM_POTIONS_NAME = "example_potions.yml";
-    private static final String EXAMPLE_CUSTOM_POTIONS_RESOURCE_PATH = "/brewing/potions/example_potions.yml";
+    private static final String EXAMPLE_CUSTOM_POTIONS_RESOURCE_PATH = "brewing/potions/example_potions.yml";
     private static final String EXAMPLE_CUSTOM_EFFECTS_NAME = "example_effects.yml";
-    private static final String EXAMPLE_CUSTOM_EFFECTS_RESOURCE_PATH = "/brewing/effects/example_effects.yml";
+    private static final String EXAMPLE_CUSTOM_EFFECTS_RESOURCE_PATH = "brewing/effects/example_effects.yml";
 
     private File brewingRecipeDir;   // Todo: qyl27: Not a local variable, maybe we have a auto-save feature?
     private File potionsDir;         // Todo: qyl27: Not a local variable, maybe we have a auto-save feature?
@@ -67,7 +67,7 @@ public class ConfigManager {
     }
 
     public boolean allowRandomEffect() {
-        return config.getBoolean("features.mundaneRandomEffect", true);
+        return config.getBoolean("features.thickRandomEffect", true);
     }
 
     public boolean allowCustomBrewingRecipe() {

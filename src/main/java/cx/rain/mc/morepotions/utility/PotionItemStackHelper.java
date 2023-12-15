@@ -4,7 +4,9 @@ import cx.rain.mc.morepotions.MorePotions;
 import cx.rain.mc.morepotions.brewing.PotionCategory;
 import cx.rain.mc.morepotions.brewing.config.PotionEntry;
 import cx.rain.mc.morepotions.brewing.config.PotionType;
+import cx.rain.mc.morepotions.brewing.persistence.CustomPotionData;
 import cx.rain.mc.morepotions.brewing.persistence.PotionContainerType;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -80,7 +82,15 @@ public class PotionItemStackHelper {
             }
 
             potionMeta.setColor(potion.getColor());
-            potionMeta.setDisplayName(potion.getShowName());
+
+            if (potion.hasShowName()) {
+                potionMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', potion.getShowName()));
+            }
+
+            var dataContainer = potionMeta.getPersistentDataContainer();
+            var data = new CustomPotionData();
+            data.setCustomPotionId(potion.getId());
+            dataContainer.set(PotionContainerType.KEY_DATA_TYPE, PotionContainerType.INSTANCE, data);
 
             stack.setItemMeta(potionMeta);
             return stack;

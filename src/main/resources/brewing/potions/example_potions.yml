@@ -19,7 +19,7 @@ potions:
       - "morepotions:speed"
     # The name shows in game.
     # Optional. Default unset.
-    name: "&f速掘药水"
+    name: "&6速掘药水"
     # RGB or ARGB color, Alpha will always be ignored.
     # Optional. Default RGB(245, 169, 184).
     color:

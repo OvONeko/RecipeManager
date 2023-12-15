@@ -17,14 +17,14 @@ public class PotionEntry implements ConfigurationSerializable {
     private static final Color DEFAULT_PINK_COLOR = Color.fromRGB(245, 169, 184);
 
     private final NamespacedKey id;
-    private final List<EffectEntry> effects = new ArrayList<>();
+    private final List<NamespacedKey> effects = new ArrayList<>();
 
     private @Nullable String showName;    // Todo: qyl27: I18n support in future?
     private Color color = DEFAULT_PINK_COLOR;
 
     public PotionEntry(NamespacedKey id, List<EffectEntry> potionEffects) {
         this.id = id;
-        this.effects.addAll(potionEffects);
+        this.effects.addAll(potionEffects.stream().map(EffectEntry::id).toList());
     }
 
     public static final String KEY_ID = "id";   // Required.
@@ -42,13 +42,7 @@ public class PotionEntry implements ConfigurationSerializable {
             for (var effectObj : effectsList) {
                 if (effectObj instanceof String effectStr) {
                     var effectId = NamespacedKey.fromString(effectStr, MorePotions.getInstance());
-                    var effect = MorePotions.getInstance().getBrewingManager().getEffect(effectId);
-
-                    if (effect != null) {
-                        effects.add(effect);
-                    } else {
-                        throw new RuntimeException("Effect '" + effectStr + "' used by '" + idStr + "' was not registered!");
-                    }
+                    effects.add(effectId);
                 }
             }
 
@@ -73,7 +67,7 @@ public class PotionEntry implements ConfigurationSerializable {
 
         var list = new ArrayList<String>();
         for (var effect : effects) {
-            list.add(effect.id().toString());
+            list.add(effect.toString());
         }
         map.put(KEY_EFFECTS, list);
 
@@ -92,7 +86,19 @@ public class PotionEntry implements ConfigurationSerializable {
     }
 
     public List<EffectEntry> getEffects() {
-        return effects;
+        var list = new ArrayList<EffectEntry>();
+
+        for (var id : effects) {
+            var effect = MorePotions.getInstance().getBrewingManager().getEffect(id);
+
+            if (effect != null) {
+                list.add(effect);
+            } else {
+                throw new RuntimeException("Effect '" + id + "' used by '" + this.id + "' was not registered!");
+            }
+        }
+
+        return list;
     }
 
     public boolean hasShowName() {

@@ -35,7 +35,7 @@ public record EffectEntry(NamespacedKey id, PotionEffectType type, int length, s
     }
 
     public int getDuration() {
-        return length / 20; // Fixme: qyl27: An assumption about 1 seconds equals 20 ticks, will be broken when using something accelerates tick speed.
+        return length * 20; // Fixme: qyl27: An assumption about 1 seconds equals 20 ticks, will be broken when using something accelerates tick speed.
     }
 
     public int getAmplifier() {
@@ -101,6 +101,7 @@ public record EffectEntry(NamespacedKey id, PotionEffectType type, int length, s
             if (beaconObj instanceof Boolean beacon) {
                 byBeacon = beacon;
             }
+
 
             return new EffectEntry(id, type, length, level, showParticles, showIcon, byBeacon);
         } else {

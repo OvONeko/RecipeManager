@@ -1,9 +1,11 @@
 package cx.rain.mc.morepotions;
 
+import cx.rain.mc.morepotions.brewing.BrewingTicker;
 import cx.rain.mc.morepotions.brewing.config.PotionEntry;
 import cx.rain.mc.morepotions.brewing.config.RecipeEntry;
 import cx.rain.mc.morepotions.config.ConfigManager;
 import cx.rain.mc.morepotions.brewing.BrewingManager;
+import cx.rain.mc.morepotions.listener.BrewingRecipeListener;
 import cx.rain.mc.morepotions.listener.DrinkPotionListener;
 import cx.rain.mc.morepotions.brewing.config.EffectEntry;
 import org.bukkit.Bukkit;
@@ -45,12 +47,16 @@ public class MorePotions extends JavaPlugin {
     @Override
     public void onEnable() {
         if (getConfigManager().allowRandomEffect()) {
-            Bukkit.getPluginManager().registerEvents(new DrinkPotionListener(this), this);
+            getServer().getPluginManager().registerEvents(new DrinkPotionListener(this), this);
+        }
+
+        if (getConfigManager().allowCustomBrewingRecipe()) {
+            getServer().getPluginManager().registerEvents(new BrewingRecipeListener(), this);
         }
     }
 
     @Override
     public void onDisable() {
-
+        BrewingTicker.stopAll();
     }
 }

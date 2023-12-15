@@ -21,7 +21,7 @@ recipes:
     baseCategory: "vanilla"
     # Base potion id.
     # Required. A namespaced key.
-    basePotion: "minecraft:thick"
+    basePotion: "minecraft:mundane"
     # Ingredient type.
     # Required.
     ingredient: "GOLD_INGOT"
