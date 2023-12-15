@@ -1,0 +1,28 @@
+# Whether plugin apply this file.
+# Required. Default true.
+enabled: false
+
+# Potion entries list.
+potions:
+  # An entry.
+  -
+    # Class name, required by deserialization, copy it!
+    ==: cx.rain.mc.morepotions.brewing.PotionEntry
+    # Unique id among all potion entries.
+    # Required. A string or namespaced key.
+    id: haste_potion
+    # Effect entries reference.
+    # Required.
+    effects:
+      # One of the entries registered effects directory.
+      - "morepotions:basic_haste"
+      - "morepotions:speed"
+    # The name shows in game.
+    # Optional. Default unset.
+    name: "&f速掘药水"
+    # RGB or ARGB color, Alpha will always be ignored.
+    # Optional. Default RGB(245, 169, 184).
+    color:
+      RED: 91
+      GREEN: 206
+      BLUE: 250

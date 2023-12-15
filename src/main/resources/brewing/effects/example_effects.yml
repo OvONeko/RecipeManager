@@ -1,0 +1,39 @@
+# Whether plugin apply this file.
+# Required. Default true.
+enabled: false
+
+# Effects entries list.
+effects:
+  # An entry.
+  -
+    # Class name, required by deserialization, copy it!
+    ==: cx.rain.mc.morepotions.brewing.EffectEntry
+    # Unique id among all effect entries.
+    # Required. A string or namespaced key.
+    id: basic_haste
+    # Minecraft effect id.
+    # Required. A namespaced key.
+    type: "minecraft:haste"
+    # Duration in seconds.
+    # Required. An integer.
+    length: 150
+    # Friendlier effect amplifier. The level is which actually used in game.
+    # Optional. Default 1. Value between 1 and 256.
+    level: 1
+    # Optional. Default true.
+    showParticles: true
+    # Optional. Default true.
+    showIcon: true
+    # Optional. Default false.
+    byBeacon: false
+  -
+    ==: cx.rain.mc.morepotions.brewing.EffectEntry
+    id: "morepotions:longer_haste"
+    type: "minecraft:haste"
+    length: 480
+  -
+    ==: cx.rain.mc.morepotions.brewing.EffectEntry
+    id: speed
+    type: "minecraft:speed"
+    length: 120
+    level: 2

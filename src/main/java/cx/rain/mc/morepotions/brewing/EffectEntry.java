@@ -1,5 +1,6 @@
 package cx.rain.mc.morepotions.brewing;
 
+import cx.rain.mc.morepotions.MorePotions;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.potion.PotionEffectType;
@@ -10,6 +11,7 @@ import java.util.Map;
 
 /**
  * A potion effect entry.
+ * @param id EffectEntry id.
  * @param type Effect type.
  * @param length Duration (seconds).
  * @param level Amplifier + 1. So the value must between 1 and 256. (Let's be more friendly).
@@ -17,19 +19,19 @@ import java.util.Map;
  * @param showIcon
  * @param byBeacon Same with ambient.
  */
-public record EffectEntry(PotionEffectType type, int length, short level,
+public record EffectEntry(NamespacedKey id, PotionEffectType type, int length, short level,
                           boolean showParticles, boolean showIcon, boolean byBeacon) implements ConfigurationSerializable {
 
-    public EffectEntry(PotionEffectType type, int length) {
-        this(type, length, (short) 1);
+    public EffectEntry(NamespacedKey id, PotionEffectType type, int length) {
+        this(id, type, length, (short) 1);
     }
 
-    public EffectEntry(PotionEffectType type, int length, short level) {
-        this(type, length, level, true);
+    public EffectEntry(NamespacedKey id, PotionEffectType type, int length, short level) {
+        this(id, type, length, level, true);
     }
 
-    public EffectEntry(PotionEffectType type, int length, short level, boolean showParticles) {
-        this(type, length, level, showParticles, true, false);
+    public EffectEntry(NamespacedKey id, PotionEffectType type, int length, short level, boolean showParticles) {
+        this(id, type, length, level, showParticles, true, false);
     }
 
     public int getDuration() {
@@ -40,6 +42,7 @@ public record EffectEntry(PotionEffectType type, int length, short level,
         return level - 1;
     }
 
+    public static final String KEY_ID = "id";   // Required
     public static final String KEY_TYPE = "type";   // Required
     public static final String KEY_LENGTH = "length";   // Required
     public static final String KEY_LEVEL = "level"; // Optional, default 1
@@ -50,6 +53,7 @@ public record EffectEntry(PotionEffectType type, int length, short level,
     @Override
     public @Nonnull Map<String, Object> serialize() {
         var map = new HashMap<String, Object>();
+        map.put(KEY_ID, id.toString());
         map.put(KEY_TYPE, type.getKey().toString());
         map.put(KEY_LENGTH, length);
         map.put(KEY_LEVEL, level);
@@ -60,42 +64,47 @@ public record EffectEntry(PotionEffectType type, int length, short level,
     }
 
     public static EffectEntry deserialize(Map<String, Object> map) {
+        var idObj = map.get(KEY_ID);
         var typeObj = map.get(KEY_TYPE);
         var lengthObj = map.get(KEY_LENGTH);
 
-        if (!(typeObj instanceof String) || !(lengthObj instanceof Integer)) {
+        if (idObj instanceof String idStr
+                && typeObj instanceof String typeStr
+                && lengthObj instanceof Integer length) {
+            var id = NamespacedKey.fromString(idStr, MorePotions.getInstance());
+
+            var type = PotionEffectType.getByKey(NamespacedKey.fromString(typeStr));
+            if (type == null) {
+                throw new RuntimeException("Effect '" + typeStr + "' not found!");
+            }
+
+            var levelObj = map.get(KEY_LEVEL);
+            short level = 1;
+            if (levelObj instanceof Integer l) {
+                level = (short) Math.max(Math.min(l, 256), 1);
+            }
+
+            var particlesObj = map.get(KEY_SHOW_PARTICLES);
+            var showParticles = true;
+            if (particlesObj instanceof Boolean particles) {
+                showParticles = particles;
+            }
+
+            var iconObj = map.get(KEY_SHOW_ICON);
+            var showIcon = true;
+            if (iconObj instanceof Boolean icon) {
+                showIcon = icon;
+            }
+
+            var beaconObj = map.get(KEY_BY_BEACON);
+            var byBeacon = false;
+            if (beaconObj instanceof Boolean beacon) {
+                byBeacon = beacon;
+            }
+
+            return new EffectEntry(id, type, length, level, showParticles, showIcon, byBeacon);
+        } else {
             throw new RuntimeException("Bad effect entry!");
         }
-        var type = PotionEffectType.getByKey(NamespacedKey.fromString((String) typeObj));
-        if (type == null) {
-            throw new RuntimeException("Effect '" + typeObj + "' not found!");
-        }
-        var length = (int) lengthObj;
-
-        var levelObj = map.get(KEY_LEVEL);
-        short level = 1;
-        if (levelObj instanceof Integer) {
-            level = (short) levelObj;
-        }
-
-        var particlesObj = map.get(KEY_SHOW_PARTICLES);
-        var showParticles = true;
-        if (particlesObj instanceof Boolean) {
-            showParticles = (boolean) particlesObj;
-        }
-
-        var iconObj = map.get(KEY_SHOW_ICON);
-        var showIcon = true;
-        if (iconObj instanceof Boolean) {
-            showIcon = (boolean) iconObj;
-        }
-
-        var beaconObj = map.get(KEY_BY_BEACON);
-        var byBeacon = false;
-        if (beaconObj instanceof Boolean) {
-            byBeacon = (boolean) beaconObj;
-        }
-
-        return new EffectEntry(type, length, level, showParticles, showIcon, byBeacon);
     }
 }

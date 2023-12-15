@@ -1,8 +1,9 @@
 package cx.rain.mc.morepotions;
 
 import cx.rain.mc.morepotions.brewing.PotionEntry;
+import cx.rain.mc.morepotions.brewing.RecipeEntry;
 import cx.rain.mc.morepotions.config.ConfigManager;
-import cx.rain.mc.morepotions.config.CustomBrewingRecipes;
+import cx.rain.mc.morepotions.brewing.BrewingManager;
 import cx.rain.mc.morepotions.listener.DrinkPotionListener;
 import cx.rain.mc.morepotions.brewing.EffectEntry;
 import org.bukkit.Bukkit;
@@ -15,16 +16,22 @@ public class MorePotions extends JavaPlugin {
     static {
         ConfigurationSerialization.registerClass(PotionEntry.class);
         ConfigurationSerialization.registerClass(EffectEntry.class);
-        ConfigurationSerialization.registerClass(CustomBrewingRecipes.class);
-        ConfigurationSerialization.registerClass(CustomBrewingRecipes.BrewingEntry.class);
+        ConfigurationSerialization.registerClass(RecipeEntry.class);
     }
+
+    private final BrewingManager brewingManager;
 
     private final ConfigManager configManager;
 
     public MorePotions() {
         INSTANCE = this;
 
+        brewingManager = new BrewingManager(this);
         configManager = new ConfigManager(this);
+    }
+
+    public BrewingManager getBrewingManager() {
+        return brewingManager;
     }
 
     public ConfigManager getConfigManager() {
