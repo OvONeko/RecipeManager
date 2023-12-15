@@ -1,9 +1,9 @@
 package cx.rain.mc.morepotions.config;
 
 import cx.rain.mc.morepotions.MorePotions;
-import cx.rain.mc.morepotions.brewing.EffectEntry;
-import cx.rain.mc.morepotions.brewing.PotionEntry;
-import cx.rain.mc.morepotions.brewing.RecipeEntry;
+import cx.rain.mc.morepotions.brewing.config.EffectEntry;
+import cx.rain.mc.morepotions.brewing.config.PotionEntry;
+import cx.rain.mc.morepotions.brewing.config.RecipeEntry;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;

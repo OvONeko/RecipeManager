@@ -1,4 +1,4 @@
-package cx.rain.mc.morepotions.brewing;
+package cx.rain.mc.morepotions.brewing.config;
 
 import cx.rain.mc.morepotions.MorePotions;
 import org.bukkit.Color;
@@ -39,7 +39,6 @@ public class PotionEntry implements ConfigurationSerializable {
         if (idObj instanceof String idStr
                 && effectsObj instanceof List<?> effectsList) {
             id = NamespacedKey.fromString(idStr, MorePotions.getInstance());
-
             for (var effectObj : effectsList) {
                 if (effectObj instanceof String effectStr) {
                     var effectId = NamespacedKey.fromString(effectStr, MorePotions.getInstance());

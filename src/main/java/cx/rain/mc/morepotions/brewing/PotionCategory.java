@@ -4,14 +4,14 @@ import org.bukkit.NamespacedKey;
 
 import javax.annotation.Nullable;
 
-public enum PotionType {
+public enum PotionCategory {
     VANILLA("vanilla"),
     CUSTOM("custom"),
     ;
 
     private final String name;
 
-    PotionType(String name) {
+    PotionCategory(String name) {
         this.name = name;
     }
 
@@ -20,7 +20,7 @@ public enum PotionType {
     }
 
     // Fixme: qyl27: Another assumption that vanilla potion id must be under minecraft namespace.
-    public static PotionType fromKey(@Nullable NamespacedKey key) {
+    public static PotionCategory fromKey(@Nullable NamespacedKey key) {
         if (key != null && "minecraft".equalsIgnoreCase(key.getNamespace())) {
             return VANILLA;
         } else {
@@ -28,7 +28,7 @@ public enum PotionType {
         }
     }
 
-    public static PotionType fromName(String name) {
+    public static PotionCategory fromName(String name) {
         if (VANILLA.getName().equalsIgnoreCase(name)) {
             return VANILLA;
         }

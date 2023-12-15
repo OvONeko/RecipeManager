@@ -7,10 +7,10 @@ effects:
   # An entry.
   -
     # Class name, required by deserialization, copy it!
-    ==: cx.rain.mc.morepotions.brewing.EffectEntry
+    ==: cx.rain.mc.morepotions.brewing.config.EffectEntry
     # Unique id among all effect entries.
-    # Required. A string or namespaced key.
-    id: basic_haste
+    # Required. A namespaced key.
+    id: "basic_haste"
     # Minecraft effect id.
     # Required. A namespaced key.
     type: "minecraft:haste"
@@ -27,13 +27,13 @@ effects:
     # Optional. Default false.
     byBeacon: false
   -
-    ==: cx.rain.mc.morepotions.brewing.EffectEntry
+    ==: cx.rain.mc.morepotions.brewing.config.EffectEntry
     id: "morepotions:longer_haste"
     type: "minecraft:haste"
     length: 480
   -
-    ==: cx.rain.mc.morepotions.brewing.EffectEntry
-    id: speed
+    ==: cx.rain.mc.morepotions.brewing.config.EffectEntry
+    id: "speed"
     type: "minecraft:speed"
     length: 120
     level: 2

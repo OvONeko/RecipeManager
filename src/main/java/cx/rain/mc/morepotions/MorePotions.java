@@ -1,11 +1,11 @@
 package cx.rain.mc.morepotions;
 
-import cx.rain.mc.morepotions.brewing.PotionEntry;
-import cx.rain.mc.morepotions.brewing.RecipeEntry;
+import cx.rain.mc.morepotions.brewing.config.PotionEntry;
+import cx.rain.mc.morepotions.brewing.config.RecipeEntry;
 import cx.rain.mc.morepotions.config.ConfigManager;
 import cx.rain.mc.morepotions.brewing.BrewingManager;
 import cx.rain.mc.morepotions.listener.DrinkPotionListener;
-import cx.rain.mc.morepotions.brewing.EffectEntry;
+import cx.rain.mc.morepotions.brewing.config.EffectEntry;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;

@@ -7,24 +7,27 @@ recipes:
   # An entry.
   -
     # Class name, required by deserialization, copy it!
-    ==: cx.rain.mc.morepotions.brewing.RecipeEntry
+    ==: cx.rain.mc.morepotions.brewing.config.RecipeEntry
     # Unique id among all recipe entries.
-    # Required. A string or namespaced key.
+    # Required. A namespaced key.
     id: "haste"
-    # Type: vanilla or custom.
+    # Type of potion. drink, splash and lingering is allowed.
+    # Optional. Default drink.
+    type: "drink"
+    # Category: vanilla or custom.
     # Vanilla is used for minecraft or modded potion type.
     # Custom is used for this plugin defined potion.
     # Optional. Will auto-detect vanilla first.
-    baseType: "vanilla"
+    baseCategory: "vanilla"
     # Base potion id.
-    # Required. A string or namespaced key.
+    # Required. A namespaced key.
     basePotion: "minecraft:thick"
     # Ingredient type.
     # Required.
     ingredient: "GOLD_INGOT"
-    # Type: vanilla or custom.
+    # Category: vanilla or custom.
     # Optional. Will auto-detect vanilla first.
-    resultType: "custom"
+    resultCategory: "custom"
     # Result potion id.
-    # Required. A string or namespaced key.
+    # Required. A namespaced key.
     result: "morepotions:haste_potion"

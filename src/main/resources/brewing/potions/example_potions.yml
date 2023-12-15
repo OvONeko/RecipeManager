@@ -7,10 +7,10 @@ potions:
   # An entry.
   -
     # Class name, required by deserialization, copy it!
-    ==: cx.rain.mc.morepotions.brewing.PotionEntry
+    ==: cx.rain.mc.morepotions.brewing.config.PotionEntry
     # Unique id among all potion entries.
-    # Required. A string or namespaced key.
-    id: haste_potion
+    # Required. A namespaced key.
+    id: "haste_potion"
     # Effect entries reference.
     # Required.
     effects:
