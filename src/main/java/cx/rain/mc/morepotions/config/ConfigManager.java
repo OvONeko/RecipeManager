@@ -67,7 +67,7 @@ public class ConfigManager {
     }
 
     public boolean allowRandomEffect() {
-        return config.getBoolean("features.thickRandomEffect", true);
+        return config.getBoolean("features.mundaneRandomEffect", true);
     }
 
     public boolean allowCustomBrewingRecipe() {

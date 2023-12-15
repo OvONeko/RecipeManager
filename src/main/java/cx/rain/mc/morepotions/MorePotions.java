@@ -47,7 +47,7 @@ public class MorePotions extends JavaPlugin {
     @Override
     public void onEnable() {
         if (getConfigManager().allowRandomEffect()) {
-            getServer().getPluginManager().registerEvents(new DrinkPotionListener(this), this);
+            getServer().getPluginManager().registerEvents(new DrinkPotionListener(), this);
         }
 
         if (getConfigManager().allowCustomBrewingRecipe()) {
