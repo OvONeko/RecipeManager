@@ -1,0 +1,33 @@
+# Whether plugin apply this file.
+# Required. Default true.
+enabled: false
+
+# List of BrewingEntry.
+recipes:
+  # An entry.
+  -
+    # Class name, required by deserialization, copy it!
+    ==: cx.rain.mc.morepotions.brewing.config.RecipeEntry
+    # Unique id among all recipe entries.
+    # Required. A namespaced key.
+    id: "haste"
+    # Type of potion. drink, splash and lingering is allowed.
+    # Optional. Default drink.
+    type: "drink"
+    # Category: vanilla or custom.
+    # Vanilla is used for minecraft or modded potion type.
+    # Custom is used for this plugin defined potion.
+    # Optional. Will auto-detect vanilla first.
+    baseCategory: "vanilla"
+    # Base potion id.
+    # Required. A namespaced key.
+    basePotion: "minecraft:mundane"
+    # Ingredient type.
+    # Required.
+    ingredient: "GOLD_INGOT"
+    # Category: vanilla or custom.
+    # Optional. Will auto-detect vanilla first.
+    resultCategory: "custom"
+    # Result potion id.
+    # Required. A namespaced key.
+    result: "morepotions:haste_potion"
