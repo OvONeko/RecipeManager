@@ -56,6 +56,11 @@ public class BrewingTicker extends BukkitRunnable {
             return;
         }
 
+        if (inventory.getIngredient() == null) {
+            stop();
+            return;
+        }
+
         if (!ingredient.equals(inventory.getIngredient().getType())) {
             stop();
             return;
