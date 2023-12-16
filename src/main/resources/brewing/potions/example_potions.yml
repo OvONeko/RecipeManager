@@ -23,6 +23,7 @@ potions:
     # RGB or ARGB color, Alpha will always be ignored.
     # Optional. Default RGB(245, 169, 184).
     color:
+      ==: org.bukkit.Color
       RED: 91
       GREEN: 206
       BLUE: 250
