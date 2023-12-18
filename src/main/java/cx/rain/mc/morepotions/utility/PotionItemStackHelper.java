@@ -1,9 +1,9 @@
 package cx.rain.mc.morepotions.utility;
 
 import cx.rain.mc.morepotions.MorePotions;
-import cx.rain.mc.morepotions.brewing.PotionCategory;
-import cx.rain.mc.morepotions.brewing.config.PotionEntry;
-import cx.rain.mc.morepotions.brewing.config.PotionType;
+import cx.rain.mc.morepotions.api.data.PotionCategory;
+import cx.rain.mc.morepotions.api.data.PotionEntry;
+import cx.rain.mc.morepotions.api.data.PotionType;
 import cx.rain.mc.morepotions.brewing.persistence.CustomPotionData;
 import cx.rain.mc.morepotions.brewing.persistence.PotionContainerType;
 import org.bukkit.ChatColor;
@@ -76,7 +76,7 @@ public class PotionItemStackHelper {
             potionMeta.setBasePotionType(org.bukkit.potion.PotionType.UNCRAFTABLE);
 
             potionMeta.clearCustomEffects();
-            for (var effect : potion.getEffects()) {
+            for (var effect : PotionHelper.getEffects(potion)) {
                 potionMeta.addCustomEffect(new PotionEffect(effect.type(), effect.getDuration(), effect.getAmplifier(),
                         effect.byBeacon(), effect.showParticles(), effect.showIcon()), true);
             }

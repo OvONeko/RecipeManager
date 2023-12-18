@@ -7,7 +7,7 @@ recipes:
   # An entry.
   -
     # Class name, required by deserialization, copy it!
-    ==: cx.rain.mc.morepotions.brewing.config.RecipeEntry
+    ==: cx.rain.mc.morepotions.api.data.RecipeEntry
     # Unique id among all recipe entries.
     # Required. A namespaced key.
     id: "haste"

@@ -1,6 +1,6 @@
-package cx.rain.mc.morepotions.brewing.config;
+package cx.rain.mc.morepotions.api.data;
 
-import cx.rain.mc.morepotions.MorePotions;
+import cx.rain.mc.morepotions.api.MorePotionsAPI;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.potion.PotionEffectType;
@@ -71,7 +71,7 @@ public record EffectEntry(NamespacedKey id, PotionEffectType type, int length, s
         if (idObj instanceof String idStr
                 && typeObj instanceof String typeStr
                 && lengthObj instanceof Integer length) {
-            var id = NamespacedKey.fromString(idStr, MorePotions.getInstance());
+            var id = NamespacedKey.fromString(idStr, MorePotionsAPI.getInstance());
 
             var type = PotionEffectType.getByKey(NamespacedKey.fromString(typeStr));
             if (type == null) {

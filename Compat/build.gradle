@@ -1,0 +1,6 @@
+plugins {
+    id 'java'
+}
+
+group = 'cx.rain.mc.morepotions.compat'
+version = '1.0.0'

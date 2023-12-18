@@ -1,33 +1,42 @@
 plugins {
     id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
     id 'com.rikonardo.papermake' version '1.0.6'
 }
 
-group = 'cx.rain.mc'
+group = 'cx.rain.mc.morepotions'
 version = '1.0.0'
 archivesBaseName = 'more-potions'
 
 sourceCompatibility = JavaVersion.toVersion(17)
 targetCompatibility = JavaVersion.toVersion(17)
 
-repositories {
-    mavenCentral()
-    maven {
-        name = 'spigotmc-repo'
-        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
-    }
-    maven {
-        name = 'CodeMC NMS repo'
-        url = 'https://repo.codemc.io/repository/nms/'
-    }
-    maven {
-        name = 'sonatype'
-        url = 'https://oss.sonatype.org/content/groups/public/'
-    }
-}
+allprojects {
+    apply plugin: 'java'
 
-dependencies {
-    compileOnly 'org.spigotmc:spigot-api:1.20.2-R0.1-SNAPSHOT'
+    repositories {
+        mavenCentral()
+        maven {
+            name = 'spigotmc-repo'
+            url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+        }
+        maven {
+            name = 'CodeMC NMS repo'
+            url = 'https://repo.codemc.io/repository/nms/'
+        }
+        maven {
+            name = 'sonatype'
+            url = 'https://oss.sonatype.org/content/groups/public/'
+        }
+    }
+
+    dependencies {
+        compileOnly 'org.spigotmc:spigot-api:1.20.2-R0.1-SNAPSHOT'
+
+        if (project.name != "Compat") {
+            compileOnly project(':Compat')
+        }
+    }
 }
 
 processResources {
@@ -36,5 +45,19 @@ processResources {
     filteringCharset 'UTF-8'
     filesMatching('plugin.yml') {
         expand props
+    }
+}
+
+jar.dependsOn(shadowJar)
+
+shadowJar {
+    mergeServiceFiles()
+}
+
+dependencies {
+    implementation project(':Compat')
+
+    if ("true".equalsIgnoreCase(System.getenv("MORE_POTIONS_MCMMO"))) {
+        implementation project(':Compat:mcMMO')
     }
 }

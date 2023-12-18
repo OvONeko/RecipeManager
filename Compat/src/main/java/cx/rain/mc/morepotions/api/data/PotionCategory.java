@@ -1,4 +1,4 @@
-package cx.rain.mc.morepotions.brewing;
+package cx.rain.mc.morepotions.api.data;
 
 import org.bukkit.NamespacedKey;
 

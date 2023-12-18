@@ -1,4 +1,4 @@
-package cx.rain.mc.morepotions.brewing.config;
+package cx.rain.mc.morepotions.api.data;
 
 import javax.annotation.Nullable;
 

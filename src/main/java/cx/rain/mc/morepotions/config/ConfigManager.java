@@ -1,9 +1,9 @@
 package cx.rain.mc.morepotions.config;
 
 import cx.rain.mc.morepotions.MorePotions;
-import cx.rain.mc.morepotions.brewing.config.EffectEntry;
-import cx.rain.mc.morepotions.brewing.config.PotionEntry;
-import cx.rain.mc.morepotions.brewing.config.RecipeEntry;
+import cx.rain.mc.morepotions.api.data.EffectEntry;
+import cx.rain.mc.morepotions.api.data.PotionEntry;
+import cx.rain.mc.morepotions.api.data.RecipeEntry;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -15,7 +15,7 @@ import java.util.List;
 public class ConfigManager {
     private final Plugin plugin;
 
-    private final FileConfiguration config;
+    private FileConfiguration config;
 
     private static final String BREWING_RECIPES_DIR_NAME = "brewing";
     private static final String CUSTOM_POTIONS_DIR_NAME = "potions";
@@ -28,9 +28,9 @@ public class ConfigManager {
     private static final String EXAMPLE_CUSTOM_EFFECTS_NAME = "example_effects.yml";
     private static final String EXAMPLE_CUSTOM_EFFECTS_RESOURCE_PATH = "brewing/effects/example_effects.yml";
 
-    private File brewingRecipeDir;   // Todo: qyl27: Not a local variable, maybe we have a auto-save feature?
-    private File potionsDir;         // Todo: qyl27: Not a local variable, maybe we have a auto-save feature?
-    private File effectsDir;         // Todo: qyl27: Not a local variable, maybe we have a auto-save feature?
+    private File brewingRecipeDir;
+    private File potionsDir;
+    private File effectsDir;
 
     public ConfigManager(Plugin plugin) {
         this.plugin = plugin;
@@ -75,19 +75,43 @@ public class ConfigManager {
     }
 
     public boolean allowAnvilMixture() {
+        // Todo: qyl27: Anything better?
         return config.getBoolean("features.anvilMixPotion", true);
     }
 
+    public boolean allowBrewingCompat() {
+        return config.getBoolean("features.brewingCompat", true);
+    }
+
+    public void reload() {
+        plugin.reloadConfig();
+        config = plugin.getConfig();
+
+        if (allowCustomBrewingRecipe()) {
+            loadBrewingRecipes();
+        }
+    }
+
+    /**
+     * Used for loading or reloading.
+     */
     private void loadBrewingRecipes() {
-        if (!effectsDir.isDirectory()) {
-            plugin.getLogger().warning("Effects dir is not a directory! Why?");
+        if (!brewingRecipeDir.exists() || !brewingRecipeDir.isDirectory()) {
+            plugin.getLogger().warning("Recipes dir is not exists! Why?");
             return;
         }
 
-        if (!potionsDir.isDirectory()) {
-            plugin.getLogger().warning("Potions dir is not a directory! Why?");
+        if (!effectsDir.exists() || !effectsDir.isDirectory()) {
+            plugin.getLogger().warning("Effects dir is not exists! Why?");
             return;
         }
+
+        if (!potionsDir.exists() || !potionsDir.isDirectory()) {
+            plugin.getLogger().warning("Potions dir is not exists! Why?");
+            return;
+        }
+
+        MorePotions.getInstance().getBrewingManager().clear();
 
         for (var file : effectsDir.listFiles()) {
             if (!file.isDirectory()) {

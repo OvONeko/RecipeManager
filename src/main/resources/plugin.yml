@@ -4,5 +4,18 @@ main: cx.rain.mc.morepotions.MorePotions
 api-version: 1.13
 prefix: MorePotions
 authors: [ qyl27 ]
-description: More brewable potions
+description: Configurable brewable potions
 website: https://github.com/qyl27/MorePotions
+commands:
+  morepotions:
+    description: MorePotions commands.
+    usage: /morepotions reload
+    permission: morepotions.command
+    aliases:
+      - mp
+permissions:
+  morepotions.command:
+    default: op
+    description: MorePotions commands.
+softdepend:
+  - mcMMO

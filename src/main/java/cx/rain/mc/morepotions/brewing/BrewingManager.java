@@ -1,8 +1,9 @@
 package cx.rain.mc.morepotions.brewing;
 
-import cx.rain.mc.morepotions.brewing.config.EffectEntry;
-import cx.rain.mc.morepotions.brewing.config.PotionEntry;
-import cx.rain.mc.morepotions.brewing.config.RecipeEntry;
+import cx.rain.mc.morepotions.api.data.EffectEntry;
+import cx.rain.mc.morepotions.api.data.PotionCategory;
+import cx.rain.mc.morepotions.api.data.PotionEntry;
+import cx.rain.mc.morepotions.api.data.RecipeEntry;
 import cx.rain.mc.morepotions.utility.Pair;
 import cx.rain.mc.morepotions.utility.PotionItemStackHelper;
 import org.bukkit.Material;
@@ -26,10 +27,12 @@ public class BrewingManager {
 
     public BrewingManager(Plugin plugin) {
         this.plugin = plugin;
+    }
 
-//        // qyl27: An default value to avoid some mistake.
-//        var emptyPotion = new PotionEntry(new NamespacedKey(MorePotions.getInstance(), "empty"), List.of());
-//        potions.put(emptyPotion.getId(), emptyPotion);
+    public void clear() {
+        recipes.clear();
+        potions.clear();
+        effects.clear();
     }
 
     public void addEffect(@Nonnull EffectEntry entry) {
@@ -61,12 +64,6 @@ public class BrewingManager {
                 .filter(r -> r.getIngredient().equals(ingredient))
                 .toList();
     }
-
-//    public List<RecipeEntry> getRecipesByBasePotion(NamespacedKey basePotion, PotionType type) {
-//        return recipes.values().stream()
-//                .filter(r -> r.getBasePotion().equals(basePotion) && r.getBaseType().equals(type))
-//                .toList();
-//    }
 
     // Fixme: qyl27: According to vanilla, the recipes with same ingredient should all apply.
     public @Nullable RecipeEntry getRecipe(BrewerInventory brewer) {

@@ -1,6 +1,6 @@
-package cx.rain.mc.morepotions.brewing.config;
+package cx.rain.mc.morepotions.api.data;
 
-import cx.rain.mc.morepotions.MorePotions;
+import cx.rain.mc.morepotions.api.MorePotionsAPI;
 import org.bukkit.Color;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
@@ -38,10 +38,10 @@ public class PotionEntry implements ConfigurationSerializable {
 
         if (idObj instanceof String idStr
                 && effectsObj instanceof List<?> effectsList) {
-            id = NamespacedKey.fromString(idStr, MorePotions.getInstance());
+            id = NamespacedKey.fromString(idStr, MorePotionsAPI.getInstance());
             for (var effectObj : effectsList) {
                 if (effectObj instanceof String effectStr) {
-                    var effectId = NamespacedKey.fromString(effectStr, MorePotions.getInstance());
+                    var effectId = NamespacedKey.fromString(effectStr, MorePotionsAPI.getInstance());
                     effects.add(effectId);
                 }
             }
@@ -85,20 +85,8 @@ public class PotionEntry implements ConfigurationSerializable {
         return id;
     }
 
-    public List<EffectEntry> getEffects() {
-        var list = new ArrayList<EffectEntry>();
-
-        for (var id : effects) {
-            var effect = MorePotions.getInstance().getBrewingManager().getEffect(id);
-
-            if (effect != null) {
-                list.add(effect);
-            } else {
-                throw new RuntimeException("Effect '" + id + "' used by '" + this.id + "' was not registered!");
-            }
-        }
-
-        return list;
+    public List<NamespacedKey> getEffects() {
+        return effects;
     }
 
     public boolean hasShowName() {

@@ -16,6 +16,10 @@ import org.bukkit.inventory.Inventory;
 public class BrewingRecipeListener implements Listener {
     @EventHandler
     public void onPlaceIngredient(InventoryClickEvent event) {
+        if (!MorePotions.getInstance().getConfigManager().allowCustomBrewingRecipe()) {
+            return;
+        }
+
         var inv = event.getClickedInventory();
 
         if (inv == null || inv.getType() != InventoryType.BREWING) {
@@ -48,7 +52,11 @@ public class BrewingRecipeListener implements Listener {
 
                 inv.setItem(event.getSlot(), cursorItem.clone());
 
-                start(inv);
+                if (event.getWhoClicked() instanceof Player player) {
+                    start(inv, player);
+                } else {
+                    start(inv, null);
+                }
             });
 
             var clicker = event.getWhoClicked();
@@ -58,7 +66,7 @@ public class BrewingRecipeListener implements Listener {
         }
     }
 
-    private void start(Inventory inv) {
+    private void start(Inventory inv, Player player) {
         if (inv instanceof BrewerInventory brewer) {
             if (brewer.getIngredient() == null) {
                 return;
@@ -70,13 +78,17 @@ public class BrewingRecipeListener implements Listener {
 
             var recipe = MorePotions.getInstance().getBrewingManager().getRecipe(brewer);
             if (recipe != null) {
-                new BrewingTicker(recipe, brewer).start();
+                new BrewingTicker(recipe, brewer, player).start();
             }
         }
     }
 
     @EventHandler
     public void onStartBrew(InventoryClickEvent event) {
+        if (!MorePotions.getInstance().getConfigManager().allowCustomBrewingRecipe()) {
+            return;
+        }
+
         var inv = event.getClickedInventory();
 
         if (inv == null || inv.getType() != InventoryType.BREWING) {
@@ -84,7 +96,12 @@ public class BrewingRecipeListener implements Listener {
         }
 
         Bukkit.getScheduler().runTask(MorePotions.getInstance(), () -> {
-            start(inv);
+            var clicker = event.getWhoClicked();
+            if (clicker instanceof Player player) {
+                start(inv, player);
+            } else {
+                start(inv, null);
+            }
         });
     }
 }

@@ -1,5 +1,6 @@
 package cx.rain.mc.morepotions.listener;
 
+import cx.rain.mc.morepotions.MorePotions;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,6 +15,10 @@ public class DrinkPotionListener implements Listener {
 
     @EventHandler
     public void OnDrinkThinkPotion(PlayerItemConsumeEvent event) {
+        if (!MorePotions.getInstance().getConfigManager().allowRandomEffect()) {
+            return;
+        }
+
         if (event.isCancelled()) {
             return;
         }

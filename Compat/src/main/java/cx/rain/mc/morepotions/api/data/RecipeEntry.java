@@ -1,7 +1,6 @@
-package cx.rain.mc.morepotions.brewing.config;
+package cx.rain.mc.morepotions.api.data;
 
-import cx.rain.mc.morepotions.MorePotions;
-import cx.rain.mc.morepotions.brewing.PotionCategory;
+import cx.rain.mc.morepotions.api.MorePotionsAPI;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
@@ -61,15 +60,15 @@ public class RecipeEntry implements ConfigurationSerializable {
                 && basePotionObj instanceof String basePotionStr
                 && ingredientObj instanceof String ingredientStr
                 && resultObj instanceof String resultStr) {
-            id = NamespacedKey.fromString(idStr, MorePotions.getInstance());
-            basePotionKey = NamespacedKey.fromString(basePotionStr, MorePotions.getInstance());
+            id = NamespacedKey.fromString(idStr, MorePotionsAPI.getInstance());
+            basePotionKey = NamespacedKey.fromString(basePotionStr, MorePotionsAPI.getInstance());
 
             ingredient = Material.getMaterial(ingredientStr);
             if (ingredient == null) {
                 throw new RuntimeException("Unknown ingredient '" + ingredientStr + "'!");
             }
 
-            resultPotionKey = NamespacedKey.fromString(resultStr, MorePotions.getInstance());
+            resultPotionKey = NamespacedKey.fromString(resultStr, MorePotionsAPI.getInstance());
 
             var typeObj = map.get(KEY_TYPE);
             if (typeObj instanceof String typeStr) {
