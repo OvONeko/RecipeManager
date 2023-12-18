@@ -12,37 +12,6 @@ import java.util.Map;
 
 public class RecipeEntry implements ConfigurationSerializable {
 
-    private final NamespacedKey id;
-    private final PotionType type;
-
-    private final PotionCategory baseCategory;
-    private final NamespacedKey basePotionKey;
-
-    private final Material ingredient;
-
-    private final PotionCategory resultCategory;
-    private final NamespacedKey resultPotionKey;
-
-    public RecipeEntry(NamespacedKey id, PotionType type, NamespacedKey basePotion, Material ingredient, org.bukkit.potion.PotionType result) {
-        this.id = id;
-        this.type = type;
-        this.basePotionKey = basePotion;
-        this.baseCategory = PotionCategory.fromKey(basePotion);
-        this.ingredient = ingredient;
-        this.resultCategory = PotionCategory.VANILLA;
-        this.resultPotionKey = result.getKey();
-    }
-
-    public RecipeEntry(NamespacedKey id, PotionType type, NamespacedKey basePotion, Material ingredient, PotionEntry result) {
-        this.id = id;
-        this.type = type;
-        this.basePotionKey = basePotion;
-        this.baseCategory = PotionCategory.fromKey(basePotion);
-        this.ingredient = ingredient;
-        this.resultCategory = PotionCategory.CUSTOM;
-        this.resultPotionKey = result.getId();
-    }
-
     public static final String KEY_ID = "id";   // Required.
     public static final String KEY_TYPE = "type"; // Optional, default drink.
     public static final String KEY_BASE_CATEGORY = "baseCategory";  // Optional, auto detect.
@@ -50,6 +19,37 @@ public class RecipeEntry implements ConfigurationSerializable {
     public static final String KEY_INGREDIENT = "ingredient";   // Required.
     public static final String KEY_RESULT_CATEGORY = "resultCategory";   // Optional, auto detect.
     public static final String KEY_RESULT = "result";  // Required.
+    public static final String KEY_TICKS = "ticks"; //Optional, default 400.
+    private final NamespacedKey id;
+    private final PotionType type;
+    private final PotionCategory baseCategory;
+    private final NamespacedKey basePotionKey;
+    private final Material ingredient;
+    private final PotionCategory resultCategory;
+    private final NamespacedKey resultPotionKey;
+    private final int ticks;
+
+    public RecipeEntry(NamespacedKey id, PotionType type, NamespacedKey basePotion, Material ingredient, org.bukkit.potion.PotionType result, int ticks) {
+        this.id = id;
+        this.type = type;
+        this.basePotionKey = basePotion;
+        this.baseCategory = PotionCategory.fromKey(basePotion);
+        this.ingredient = ingredient;
+        this.resultCategory = PotionCategory.VANILLA;
+        this.resultPotionKey = result.getKey();
+        this.ticks = ticks;
+    }
+
+    public RecipeEntry(NamespacedKey id, PotionType type, NamespacedKey basePotion, Material ingredient, PotionEntry result, int ticks) {
+        this.id = id;
+        this.type = type;
+        this.basePotionKey = basePotion;
+        this.baseCategory = PotionCategory.fromKey(basePotion);
+        this.ingredient = ingredient;
+        this.resultCategory = PotionCategory.CUSTOM;
+        this.resultPotionKey = result.getId();
+        this.ticks = ticks;
+    }
 
     public RecipeEntry(Map<String, Object> map) {
         var idObj = map.get(KEY_ID);
@@ -74,24 +74,36 @@ public class RecipeEntry implements ConfigurationSerializable {
             var typeObj = map.get(KEY_TYPE);
             if (typeObj instanceof String typeStr) {
                 type = PotionType.fromString(typeStr);
-            } else {
+            }
+            else {
                 type = PotionType.DRINK;
             }
 
             var baseTypeObj = map.get(KEY_BASE_CATEGORY);
             if (baseTypeObj instanceof String str) {
                 baseCategory = PotionCategory.fromName(str);
-            } else {
+            }
+            else {
                 baseCategory = PotionCategory.fromKey(basePotionKey);
             }
 
             var resultTypeObj = map.get(KEY_RESULT_CATEGORY);
             if (resultTypeObj instanceof String str) {
                 resultCategory = PotionCategory.fromName(str);
-            } else {
+            }
+            else {
                 resultCategory = PotionCategory.fromKey(resultPotionKey);
             }
-        } else {
+
+            var tickObj = map.get(KEY_TICKS);
+            if (tickObj instanceof Integer i) {
+                ticks = i;
+            }
+            else {
+                ticks = 400;
+            }
+        }
+        else {
             throw new RuntimeException("Not completed brewing recipe!");
         }
     }
@@ -106,6 +118,7 @@ public class RecipeEntry implements ConfigurationSerializable {
         map.put(KEY_INGREDIENT, ingredient.name());
         map.put(KEY_RESULT_CATEGORY, resultCategory.getName());
         map.put(KEY_RESULT, resultPotionKey.toString());
+        map.put(KEY_TICKS, ticks);
         return map;
     }
 
@@ -135,5 +148,9 @@ public class RecipeEntry implements ConfigurationSerializable {
 
     public NamespacedKey getResultId() {
         return resultPotionKey;
+    }
+
+    public int getTicks() {
+        return ticks;
     }
 }
