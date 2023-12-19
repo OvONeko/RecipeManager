@@ -33,7 +33,7 @@ public class DrinkPotionListener implements Listener {
     }
 
     private PotionEffect getRandomEffect() {
-        PotionEffectType type = PotionEffectType.getById(RAND.nextInt(1, PotionEffectType.values().length + 1));
+        PotionEffectType type = PotionEffectType.getById(RAND.nextInt(1, PotionEffectType.values().length + 2));    // Bukkit, you have skipped the element with index 0.
         int duration = RAND.nextInt(5, 87) * 20;
         int amplifier = RAND.nextInt(0, 4);
         return new PotionEffect(type, duration, amplifier, false, true, true);
