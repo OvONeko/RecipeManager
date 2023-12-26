@@ -1,8 +1,8 @@
-rootProject.name = 'MorePotions'
+rootProject.name = 'RecipeManager'
 
 include ':Compat'
 
-if ("true".equalsIgnoreCase(System.getenv("MORE_POTIONS_MCMMO"))) {
+if ("true".equalsIgnoreCase(System.getenv("RECIPE_MANAGER_MCMMO"))) {
     include ':Compat:mcMMO'
     findProject(':Compat:mcMMO')?.name = 'mcMMO'
 }

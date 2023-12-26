@@ -91,7 +91,7 @@ public class ConfigManager {
 
             if (!stonecuttingDir.exists()) {
                 stonecuttingDir.mkdirs();
-                saveDefaultConfig(new File(stonecuttingDir, EXAMPLE_STONECUTTING_RECIPES_NAME), EXAMPLE_FURNACE_RECIPES_RESOURCE_PATH);
+                saveDefaultConfig(new File(stonecuttingDir, EXAMPLE_STONECUTTING_RECIPES_NAME), EXAMPLE_STONECUTTING_RECIPRS_RESOURCE_PATH);
             }
 
             loadStoneCuttingRecipe();
