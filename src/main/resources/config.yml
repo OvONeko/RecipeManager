@@ -4,3 +4,4 @@ features:
   anvilMixPotion: true
   brewingCompat: true
   customFurnaceRecipe: true
+  customStoneCuttingRecipe: true

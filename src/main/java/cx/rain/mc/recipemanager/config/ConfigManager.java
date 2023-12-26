@@ -1,10 +1,7 @@
 package cx.rain.mc.recipemanager.config;
 
 import cx.rain.mc.recipemanager.RecipeManager;
-import cx.rain.mc.recipemanager.api.data.EffectEntry;
-import cx.rain.mc.recipemanager.api.data.FurnaceEntry;
-import cx.rain.mc.recipemanager.api.data.PotionEntry;
-import cx.rain.mc.recipemanager.api.data.RecipeEntry;
+import cx.rain.mc.recipemanager.api.data.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -34,10 +31,16 @@ public class ConfigManager {
     private static final String EXAMPLE_FURNACE_RECIPES_NAME = "example_recipe.yml";
     private static final String EXAMPLE_FURNACE_RECIPES_RESOURCE_PATH = "furnace/example_recipe.yml";
 
+    private static final String STONECUTTING_RECIPE_DIR_NAME = "stonecutting";
+
+    private static final String EXAMPLE_STONECUTTING_RECIPES_NAME = "example_recipe.yml";
+    private static final String EXAMPLE_STONECUTTING_RECIPRS_RESOURCE_PATH = "stonecutting/example_recipe.yml";
+
     private File brewingRecipeDir;
     private File potionsDir;
     private File effectsDir;
     private File furnaceDir;
+    private File stonecuttingDir;
 
     public ConfigManager(Plugin plugin) {
         this.plugin = plugin;
@@ -82,6 +85,17 @@ public class ConfigManager {
 
             loadFurnaceRecipes();
         }
+
+        if (allowCustomStoneCuttingRecipe()) {
+            stonecuttingDir = new File(plugin.getDataFolder(), STONECUTTING_RECIPE_DIR_NAME);
+
+            if (!stonecuttingDir.exists()) {
+                stonecuttingDir.mkdirs();
+                saveDefaultConfig(new File(stonecuttingDir, EXAMPLE_STONECUTTING_RECIPES_NAME), EXAMPLE_FURNACE_RECIPES_RESOURCE_PATH);
+            }
+
+            loadStoneCuttingRecipe();
+        }
     }
 
     public boolean allowRandomEffect() {
@@ -94,6 +108,10 @@ public class ConfigManager {
 
     public boolean allowCustomFurnaceRecipe() {
         return config.getBoolean("features.customFurnaceRecipe", true);
+    }
+
+    public boolean allowCustomStoneCuttingRecipe() {
+        return config.getBoolean("features.customStoneCuttingRecipe", true);
     }
 
     public boolean allowAnvilMixture() {
@@ -114,6 +132,9 @@ public class ConfigManager {
         }
         if (allowCustomFurnaceRecipe()) {
             loadFurnaceRecipes();
+        }
+        if (allowCustomStoneCuttingRecipe()) {
+            loadStoneCuttingRecipe();
         }
     }
 
@@ -198,6 +219,29 @@ public class ConfigManager {
                     for (var recipe : list) {
                         if (recipe instanceof FurnaceEntry entry) {
                             RecipeManager.getInstance().getFurnaceManager().registry(entry);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void loadStoneCuttingRecipe() {
+        if (!stonecuttingDir.exists() || !stonecuttingDir.isDirectory()) {
+            plugin.getLogger().warning("Stone cutting recipes dir is not exists, why?");
+            return;
+        }
+
+        RecipeManager.getInstance().getStoneCuttingManager().clear();
+
+        for (var file : stonecuttingDir.listFiles()) {
+            if (!file.isDirectory()) {
+                var recipes = load(file);
+                if (recipes.getBoolean("enabled", true)) {
+                    var list = recipes.getList("recipes", List.of());
+                    for (var recipe : list) {
+                        if (recipe instanceof StoneCuttingEntry entry) {
+                            RecipeManager.getInstance().getStoneCuttingManager().registry(entry);
                         }
                     }
                 }

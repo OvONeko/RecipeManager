@@ -1,0 +1,12 @@
+# Whether plugin apply this file.
+# Required. Default true.
+enabled: true
+
+# List of recipes
+recipes:
+  -
+    ==: cx.rain.mc.recipemanager.api.data.StoneCuttingEntry
+    id: "cherry_slab_cut"
+    from: "CHERRY_PLANKS"
+    result: "CHERRY_SLAB"
+    amount: 2

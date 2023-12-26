@@ -12,3 +12,19 @@ recipes:
     experience: 6.3
     time: 1600
     allowBlast: true
+  -
+    ==: cx.rain.mc.recipemanager.api.data.FurnaceEntry
+    id: "iron_block"
+    from: "RAW_IRON_BLOCK"
+    result: "IRON_BLOCK"
+    experience: 6.3
+    time: 1600
+    allowBlast: true
+  -
+    ==: cx.rain.mc.recipemanager.api.data.FurnaceEntry
+    id: "gold_block"
+    from: "RAW_GOLD_BLOCK"
+    result: "GOLD_BLOCK"
+    experience: 6.3
+    time: 1600
+    allowBlast: true

@@ -1,10 +1,8 @@
 package cx.rain.mc.recipemanager;
 
 import cx.rain.mc.recipemanager.api.RecipeManagerAPI;
-import cx.rain.mc.recipemanager.api.data.FurnaceEntry;
-import cx.rain.mc.recipemanager.api.data.RecipeEntry;
+import cx.rain.mc.recipemanager.api.data.*;
 import cx.rain.mc.recipemanager.brewing.BrewingTicker;
-import cx.rain.mc.recipemanager.api.data.PotionEntry;
 import cx.rain.mc.recipemanager.command.MorePotionsCommand;
 import cx.rain.mc.recipemanager.compat.CompatManager;
 import cx.rain.mc.recipemanager.config.ConfigManager;
@@ -12,7 +10,7 @@ import cx.rain.mc.recipemanager.brewing.BrewingManager;
 import cx.rain.mc.recipemanager.furnace.FurnaceManager;
 import cx.rain.mc.recipemanager.listener.BrewingRecipeListener;
 import cx.rain.mc.recipemanager.listener.DrinkPotionListener;
-import cx.rain.mc.recipemanager.api.data.EffectEntry;
+import cx.rain.mc.recipemanager.stonecutting.StoneCuttingManager;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -24,6 +22,7 @@ public class RecipeManager extends JavaPlugin {
         ConfigurationSerialization.registerClass(EffectEntry.class);
         ConfigurationSerialization.registerClass(RecipeEntry.class);
         ConfigurationSerialization.registerClass(FurnaceEntry.class);
+        ConfigurationSerialization.registerClass(StoneCuttingEntry.class);
     }
 
     private final BrewingManager brewingManager;
@@ -33,6 +32,7 @@ public class RecipeManager extends JavaPlugin {
     private final CompatManager compatManager;
 
     private final FurnaceManager furnaceManager;
+    private final StoneCuttingManager stoneCuttingManager;
 
     public RecipeManager() {
         INSTANCE = this;
@@ -42,6 +42,7 @@ public class RecipeManager extends JavaPlugin {
         configManager = new ConfigManager(this);
         compatManager = new CompatManager();
         furnaceManager = new FurnaceManager(this);
+        stoneCuttingManager = new StoneCuttingManager(this);
     }
 
     public BrewingManager getBrewingManager() {
@@ -58,6 +59,10 @@ public class RecipeManager extends JavaPlugin {
 
     public FurnaceManager getFurnaceManager() {
         return furnaceManager;
+    }
+
+    public StoneCuttingManager getStoneCuttingManager() {
+        return stoneCuttingManager;
     }
 
     public static RecipeManager getInstance() {
