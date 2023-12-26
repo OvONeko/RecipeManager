@@ -1,8 +1,8 @@
 name: MorePotions
 version: '${version}'
-main: cx.rain.mc.morepotions.MorePotions
+main: cx.rain.mc.recipemanager.RecipeManager
 api-version: 1.13
-prefix: MorePotions
+prefix: RecipeManager
 authors: [ qyl27 ]
 description: Configurable brewable potions
 website: https://github.com/qyl27/MorePotions
