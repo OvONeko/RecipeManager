@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group = 'cx.rain.mc.morepotions.compat.mcmmo'
+group = 'cx.rain.mc.recipemanager.compat.mcmmo'
 version = '1.0.0'
 
 repositories {
