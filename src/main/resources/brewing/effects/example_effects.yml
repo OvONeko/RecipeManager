@@ -7,7 +7,7 @@ effects:
   # An entry.
   -
     # Class name, required by deserialization, copy it!
-    ==: cx.rain.mc.morepotions.api.data.EffectEntry
+    ==: cx.rain.mc.recipemanager.api.data.EffectEntry
     # Unique id among all effect entries.
     # Required. A namespaced key.
     id: "basic_haste"
@@ -27,12 +27,12 @@ effects:
     # Optional. Default false.
     byBeacon: false
   -
-    ==: cx.rain.mc.morepotions.api.data.EffectEntry
-    id: "morepotions:longer_haste"
+    ==: cx.rain.mc.recipemanager.api.data.EffectEntry
+    id: "recipemanager:longer_haste"
     type: "minecraft:haste"
     length: 480
   -
-    ==: cx.rain.mc.morepotions.api.data.EffectEntry
+    ==: cx.rain.mc.recipemanager.api.data.EffectEntry
     id: "speed"
     type: "minecraft:speed"
     length: 120

@@ -7,7 +7,7 @@ recipes:
   # An entry.
   -
     # Class name, required by deserialization, copy it!
-    ==: cx.rain.mc.morepotions.api.data.RecipeEntry
+    ==: cx.rain.mc.recipemanager.api.data.RecipeEntry
     # Unique id among all recipe entries.
     # Required. A namespaced key.
     id: "haste"
@@ -30,4 +30,4 @@ recipes:
     resultCategory: "custom"
     # Result potion id.
     # Required. A namespaced key.
-    result: "morepotions:haste_potion"
+    result: "recipemanager:haste_potion"

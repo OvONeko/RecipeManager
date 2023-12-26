@@ -1,0 +1,14 @@
+# Whether plugin apply this file.
+# Required. Default true.
+enabled: true
+
+# List of recipes
+recipes:
+  -
+    ==: cx.rain.mc.recipemanager.api.data.FurnaceEntry
+    id: "copper_block"
+    from: "RAW_COPPER_BLOCK"
+    result: "COPPER_BLOCK"
+    experience: 6.3
+    time: 1600
+    allowBlast: true

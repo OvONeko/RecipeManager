@@ -7,7 +7,7 @@ potions:
   # An entry.
   -
     # Class name, required by deserialization, copy it!
-    ==: cx.rain.mc.morepotions.api.data.PotionEntry
+    ==: cx.rain.mc.recipemanager.api.data.PotionEntry
     # Unique id among all potion entries.
     # Required. A namespaced key.
     id: "haste_potion"
@@ -15,8 +15,8 @@ potions:
     # Required.
     effects:
       # One of the entries registered effects directory.
-      - "morepotions:basic_haste"
-      - "morepotions:speed"
+      - "recipemanager:basic_haste"
+      - "recipemanager:speed"
     # The name shows in game.
     # Optional. Default unset.
     name: "&6速掘药水"
